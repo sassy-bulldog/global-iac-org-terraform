@@ -1,6 +1,11 @@
-# This resource here is to show you how plan policies work.
+locals {
+  default_tags = {
+    # environment = var.environment
+    company = var.company_name
+  }
+}
 
-resource "random_password" "secret" {
-  length  = 8
-  special = true
+resource "azurerm_resource_group" "company" {
+  name     = var.company_name
+  location = var.azure_region
 }

@@ -10,16 +10,25 @@ data "spacelift_stack" "this" {
   stack_id = data.spacelift_current_stack.this.id
 }
 
-resource "spacelift_stack" "managed" {
-  name        = "Managed stack"
-  description = "Your first stack managed by Terraform"
+resource "spacelift_stack" "enterprise" {
+  space_id    = spacelift_space.enterprise.id
+  name        = "${var.enterprise_name} stack"
+  description = var.enterprise_description
 
   repository   = data.spacelift_stack.this.repository
   branch       = data.spacelift_stack.this.branch
-  project_root = "managed-stack"
+  project_root = var.enterprise_name
 
   autodeploy = true
   labels     = ["managed", "depends-on:${data.spacelift_current_stack.this.id}"]
+}
+
+# For a stack to talk to Azure, you need to attach an Azure integration to it.
+resource "spacelift_azure_integration_attachment" "readonly" {
+  integration_id  = spacelift_azure_integration.enterprise.id
+  stack_id        = spacelift_stack.enterprise.id
+  write           = false
+  subscription_id = spacelift_azure_integration.enterprise.default_subscription_id
 }
 
 # This is an environment variable defined on the stack level. Stack-level
@@ -30,19 +39,19 @@ resource "spacelift_stack" "managed" {
 # You can read more about environment variables here:
 #
 # https://docs.spacelift.io/concepts/environment#environment-variables
-resource "spacelift_environment_variable" "stack-plaintext" {
-  stack_id   = spacelift_stack.managed.id
-  name       = "STACK_PUBLIC"
-  value      = "This should be visible!"
-  write_only = false
-}
+# resource "spacelift_environment_variable" "stack-plaintext" {
+#   stack_id   = spacelift_stack.managed.id
+#   name       = "STACK_PUBLIC"
+#   value      = "This should be visible!"
+#   write_only = false
+# }
 
 # For another (secret) variable, let's create programmatically create a super
 # secret password.
-resource "random_password" "stack-password" {
-  length  = 32
-  special = true
-}
+# resource "random_password" "stack-password" {
+#   length  = 32
+#   special = true
+# }
 
 # This is a secret environment variable. Note how we didn't set the write_only
 # bit at all here. This setting always defaults to "true" to protect you against
@@ -52,11 +61,11 @@ resource "random_password" "stack-password" {
 #
 # If you accidentally print it out to the logs, no worries: we will obfuscate
 # every secret thing we know of.
-resource "spacelift_environment_variable" "stack-writeonly" {
-  stack_id = spacelift_stack.managed.id
-  name     = "STACK_SECRET"
-  value    = random_password.stack-password.result
-}
+# resource "spacelift_environment_variable" "stack-writeonly" {
+#   stack_id = spacelift_stack.managed.id
+#   name     = "STACK_SECRET"
+#   value    = random_password.stack-password.result
+# }
 
 # Apart from setting environment variables on your Stacks, you can mount files
 # directly in Spacelift's workspace. Let's retrieve the list of Spacelift's
@@ -70,18 +79,18 @@ data "spacelift_ips" "ips" {}
 # You can read more about mounted files here: 
 #
 # https://docs.spacelift.io/concepts/environment#mounted-files
-resource "spacelift_mounted_file" "stack-plaintext-file" {
-  stack_id      = spacelift_stack.managed.id
-  relative_path = "stack-plaintext-ips.json"
-  content       = base64encode(jsonencode(data.spacelift_ips.ips.ips))
-  write_only    = false
-}
+# resource "spacelift_mounted_file" "stack-plaintext-file" {
+#   stack_id      = spacelift_stack.managed.id
+#   relative_path = "stack-plaintext-ips.json"
+#   content       = base64encode(jsonencode(data.spacelift_ips.ips.ips))
+#   write_only    = false
+# }
 
 # Mounted-files can be write-only, too, and they are by default. The content of
 # write-only mounted files cannot be accessed neither from the GUI nor from the
 # GraphQL API.
-resource "spacelift_mounted_file" "stack-secret-file" {
-  stack_id      = spacelift_stack.managed.id
-  relative_path = "stack-secret-password.json"
-  content       = base64encode(jsonencode({ password = random_password.stack-password.result }))
-}
+# resource "spacelift_mounted_file" "stack-secret-file" {
+#   stack_id      = spacelift_stack.managed.id
+#   relative_path = "stack-secret-password.json"
+#   content       = base64encode(jsonencode({ password = random_password.stack-password.result }))
+# }

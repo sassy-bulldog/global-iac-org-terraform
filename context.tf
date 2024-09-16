@@ -4,9 +4,10 @@
 # You can read about contexts here:
 #
 # https://docs.spacelift.io/concepts/context
-resource "spacelift_context" "managed" {
-  name        = "Managed context"
-  description = "Your first context managed by Terraform"
+resource "spacelift_context" "enterprise" {
+  name        = "${var.enterprise_org_name} context"
+  description = "Context for the ${var.enterprise_org_name} organization"
+  space_id    = spacelift_space.enterprise.id
 }
 
 # This is an envioronment variable defined on the context level. When the
@@ -18,19 +19,19 @@ resource "spacelift_context" "managed" {
 # You can read more about environment variables here:
 #
 # https://docs.spacelift.io/concepts/environment#environment-variables
-resource "spacelift_environment_variable" "context-plaintext" {
-  context_id = spacelift_context.managed.id
-  name       = "CONTEXT_PUBLIC"
-  value      = "This should be visible!"
-  write_only = false
-}
+# resource "spacelift_environment_variable" "context-plaintext" {
+#   context_id = spacelift_context.enterprise.id
+#   name       = "CONTEXT_PUBLIC"
+#   value      = "This should be visible!"
+#   write_only = false
+# }
 
 # For another (secret) variable, let's create programmatically create a super
 # secret password.
-resource "random_password" "context-password" {
-  length  = 32
-  special = true
-}
+# resource "random_password" "context-password" {
+#   length  = 32
+#   special = true
+# }
 
 # This is a secret environment variable. Note how we didn't set the write_only
 # bit at all here. This setting always defaults to "true" to protect you against
@@ -40,11 +41,11 @@ resource "random_password" "context-password" {
 #
 # If you accidentally print it out to the logs, no worries: we will obfuscate
 # every secret thing we know of.
-resource "spacelift_environment_variable" "context-writeonly" {
-  context_id = spacelift_context.managed.id
-  name       = "CONTEXT_SECRET"
-  value      = random_password.context-password.result
-}
+# resource "spacelift_environment_variable" "context-writeonly" {
+#   context_id = spacelift_context.enterprise.id
+#   name       = "CONTEXT_SECRET"
+#   value      = random_password.context-password.result
+# }
 
 # Apart from setting environment variables in your Contexts, you can add files
 # to be mounted directly in Spacelift's workspace. For the purpose of this
@@ -53,23 +54,23 @@ resource "spacelift_environment_variable" "context-writeonly" {
 # You can read more about mounted files here: 
 #
 # https://docs.spacelift.io/concepts/environment#mounted-files
-resource "spacelift_mounted_file" "context-plaintext-file" {
-  context_id    = spacelift_context.managed.id
-  relative_path = "context-plaintext-file.json"
-  content = base64encode(jsonencode({
-    payload = spacelift_environment_variable.context-plaintext.value
-  }))
-  write_only = false
-}
+# resource "spacelift_mounted_file" "context-plaintext-file" {
+#   context_id    = spacelift_context.enterprise.id
+#   relative_path = "context-plaintext-file.json"
+#   content = base64encode(jsonencode({
+#     payload = spacelift_environment_variable.context-plaintext.value
+#   }))
+#   write_only = false
+# }
 
 # Since you can't read back the value from a write-only environment variable
 # like we just did that for the read-write one, we'll need to retrieve the value
 # of the password directly from its resource.
-resource "spacelift_mounted_file" "context-secret-file" {
-  context_id    = spacelift_context.managed.id
-  relative_path = "context-secret-password.json"
-  content       = base64encode(jsonencode({ password = random_password.context-password.result }))
-}
+# resource "spacelift_mounted_file" "context-secret-file" {
+#   context_id    = spacelift_context.enterprise.id
+#   relative_path = "context-secret-password.json"
+#   content       = base64encode(jsonencode({ password = random_password.context-password.result }))
+# }
 
 # This resource attaches context to a Stack. Since this is many-to-many
 # relationship and a single Stack can have multiple contexts attached to it, the
@@ -79,8 +80,8 @@ resource "spacelift_mounted_file" "context-secret-file" {
 # You can read about attaching and detaching contexts here:
 #
 # https://docs.spacelift.io/concepts/context#attaching-and-detaching
-resource "spacelift_context_attachment" "managed" {
-  context_id = spacelift_context.managed.id
-  stack_id   = spacelift_stack.managed.id
-  priority   = 0
-}
+# resource "spacelift_context_attachment" "enterprise" {
+#   context_id = spacelift_context.enterprise.id
+#   stack_id   = spacelift_stack.enterprise.id
+#   priority   = 0
+# }

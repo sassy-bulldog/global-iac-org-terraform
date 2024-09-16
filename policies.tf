@@ -53,7 +53,7 @@ resource "spacelift_policy_attachment" "push" {
 resource "spacelift_policy" "trigger" {
   type = "TRIGGER"
 
-  # space_id = spacelift_space.family.id
+  # space_id = spacelift_space.enterprise.id
   name = "Trigger stacks that declare an explicit dependency"
   body = file("${path.module}/policies/trigger.rego")
 }
@@ -61,7 +61,7 @@ resource "spacelift_policy" "trigger" {
 # Trigger policies only take effect when attached to the stack.
 resource "spacelift_policy_attachment" "trigger" {
   policy_id = spacelift_policy.trigger.id
-  stack_id  = spacelift_stack.family.id
+  stack_id  = spacelift_stack.enterprise.id
 }
 
 # Let's attach the policy to the current stack, so that the child stack is

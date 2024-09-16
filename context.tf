@@ -5,8 +5,8 @@
 #
 # https://docs.spacelift.io/concepts/context
 resource "spacelift_context" "enterprise" {
-  name        = "${var.enterprise_org_name} context"
-  description = "Context for the ${var.enterprise_org_name} organization"
+  name        = "${var.enterprise_name} context"
+  description = "Context for the ${var.enterprise_name} organization"
   space_id    = spacelift_space.enterprise.id
 }
 

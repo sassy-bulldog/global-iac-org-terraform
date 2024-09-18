@@ -1,4 +1,8 @@
 resource "spacelift_stack" "enterprise" {
+  github_enterprise {
+      namespace = "sassy-bulldog"
+    }
+
   space_id    = spacelift_space.enterprise.id
   name        = "${var.enterprise_name} stack"
   description = var.enterprise_description

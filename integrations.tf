@@ -13,9 +13,11 @@ resource "spacelift_azure_integration" "enterprise" {
 }
 
 # For a stack to talk to Azure, you need to attach an Azure integration to it.
-# resource "spacelift_azure_integration_attachment" "readonly" {
-#   integration_id  = spacelift_azure_integration.enterprise.id
-#   stack_id        = spacelift_stack.enterprise.id
-#   write           = false
-#   subscription_id = spacelift_azure_integration.enterprise.default_subscription_id
-# }
+resource "spacelift_azure_integration_attachment" "sdlc_environments" {
+  for_each = spacelift_stack.sdlc_environments
+
+  integration_id  = spacelift_azure_integration.enterprise.id
+  stack_id        = each.value.id
+  write           = true
+  subscription_id = var.azure_subscription_ids[each.key]
+}

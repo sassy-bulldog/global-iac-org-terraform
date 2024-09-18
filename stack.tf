@@ -20,6 +20,7 @@ resource "spacelift_stack" "sdlc_environments" {
     local.labels,
     [
       each.key,
+      "azure",
       "depends-on:${data.spacelift_current_stack.this.id}"
     ]
   )

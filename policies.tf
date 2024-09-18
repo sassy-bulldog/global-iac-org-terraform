@@ -66,6 +66,7 @@ resource "spacelift_policy" "trigger" {
 }
 
 # Trigger policies only take effect when attached to the stack.
+# While this is required, it also means that if the stacks are explicitly dependent on each other they must be in same space, or trigger must be in space exposed to child stacks.
 # resource "spacelift_policy_attachment" "trigger" {
 #   policy_id = spacelift_policy.trigger.id
 #   stack_id  = data.spacelift_current_stack.this.id

@@ -10,7 +10,7 @@ resource "spacelift_stack" "enterprise" {
 
   repository   = data.spacelift_stack.this.repository
   branch       = data.spacelift_stack.this.branch
-  project_root = "enterprise"  # Subdirectory in this repository to use
+  project_root = "enterprise"  # Subdirectory in this repository to use WTF
 
   autodeploy = true
   labels     = [

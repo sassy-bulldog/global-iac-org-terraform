@@ -1,5 +1,5 @@
 resource "spacelift_stack" "sdlc_environments" {
-  for_each = ["development"]  # keys(var.azure_subscription_ids)
+  for_each = toset(["development"])  # keys(var.azure_subscription_ids)
 
   # This block is required if not using the Spacelift GitHub App installed from marketplace
   github_enterprise {

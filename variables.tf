@@ -19,7 +19,7 @@ variable "azure_tenant_id" {
 variable "azure_subscription_ids" {
   description = "The Azure subscription ID map to use for various environments, applications, etc."
   type        = map(string)
-  sensitive   = true
+  # sensitive   = true
 
   validation  {
     condition = contains(keys(var.azure_subscription_ids), "development")

@@ -66,8 +66,10 @@ resource "spacelift_policy" "trigger" {
 
 # Trigger policies only take effect when attached to the stack.
 resource "spacelift_policy_attachment" "trigger" {
+  for_each = spacelift_stack.sdlc_environments
+  
   policy_id = spacelift_policy.trigger.id
-  stack_id  = spacelift_stack.enterprise.id
+  stack_id  = each.value.id
 }
 
 # Let's attach the policy to the current stack, so that the child stack is

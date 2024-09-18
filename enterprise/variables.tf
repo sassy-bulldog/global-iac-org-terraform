@@ -27,6 +27,7 @@ variable "azure_region" {
   default     = "South Central US"
 }
 
+# https://en.wikipedia.org/wiki/Reserved_IP_addresses
 variable "azure_vnet_cidr_block" {
   description = "The CIDR block for the Azure VNet"
   type        = string

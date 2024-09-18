@@ -32,7 +32,7 @@ resource "spacelift_policy_attachment" "plan" {
 resource "spacelift_policy" "push" {
   type = "GIT_PUSH"
 
-  space_id  = spacelift_space.enterprise.id
+  space_id  = data.spacelift_space.root.id
   name = "Ignore commits outside the project root"
   body = file("${path.module}/policies/push.rego")
   labels = setunion(
@@ -60,7 +60,7 @@ resource "spacelift_policy" "push" {
 resource "spacelift_policy" "trigger" {
   type = "TRIGGER"
 
-  space_id = spacelift_space.enterprise.id
+  space_id  = data.spacelift_space.root.id
   name = "Trigger stacks that declare an explicit dependency"
   body = file("${path.module}/policies/trigger.rego")
 }

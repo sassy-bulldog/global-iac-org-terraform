@@ -1,4 +1,5 @@
 resource "spacelift_stack" "enterprise" {
+  # This block is required if not using the Spacelift GitHub App installed from marketplace
   github_enterprise {
       namespace = "sassy-bulldog"
     }

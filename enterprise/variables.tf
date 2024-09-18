@@ -26,3 +26,9 @@ variable "azure_region" {
   type        = string
   default     = "South Central US"
 }
+
+variable "azure_vnet_cidr_block" {
+  description = "The CIDR block for the Azure VNet"
+  type        = string
+  default     = "10.0.0.0/24"
+}

@@ -1,3 +1,4 @@
+# We should move this to another repo and have it target specific branches
 resource "spacelift_stack" "sdlc_environments" {
   for_each = toset(["development"])  # keys(var.azure_subscription_ids)
 
@@ -12,7 +13,7 @@ resource "spacelift_stack" "sdlc_environments" {
 
   repository   = data.spacelift_stack.this.repository
   branch       = data.spacelift_stack.this.branch
-  project_root = "enterprise"  # Subdirectory in this repository to use WTF
+  project_root = "enterprise"  # Subdirectory in this repository to use
 
   autodeploy = true
   labels     = setunion(

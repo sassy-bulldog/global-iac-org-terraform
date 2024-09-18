@@ -32,6 +32,7 @@ resource "spacelift_policy_attachment" "plan" {
 resource "spacelift_policy" "push" {
   type = "GIT_PUSH"
 
+  space_id  = spacelift_space.enterprise.id
   name = "Ignore commits outside the project root"
   body = file("${path.module}/policies/push.rego")
   labels = setunion(
@@ -59,7 +60,7 @@ resource "spacelift_policy" "push" {
 resource "spacelift_policy" "trigger" {
   type = "TRIGGER"
 
-  # space_id = spacelift_space.enterprise.id
+  space_id = spacelift_space.enterprise.id
   name = "Trigger stacks that declare an explicit dependency"
   body = file("${path.module}/policies/trigger.rego")
 }
@@ -67,7 +68,7 @@ resource "spacelift_policy" "trigger" {
 # Trigger policies only take effect when attached to the stack.
 resource "spacelift_policy_attachment" "trigger" {
   for_each = spacelift_stack.sdlc_environments
-  
+
   policy_id = spacelift_policy.trigger.id
   stack_id  = each.value.id
 }
@@ -96,6 +97,7 @@ resource "spacelift_policy_attachment" "trigger-self" {
 resource "spacelift_policy" "login" {
   type = "LOGIN"
 
+  space_id  = data.spacelift_space.root.id
   name = "Standard GitHub login policy"
   body = file("${path.module}/policies/login.rego")
 }

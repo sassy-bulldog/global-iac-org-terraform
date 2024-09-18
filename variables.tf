@@ -16,8 +16,13 @@ variable "azure_tenant_id" {
   sensitive   = true
 }
 
-variable "default_azure_subscription_id" {
-  description = "The default Azure subscription ID when deploying resources."
-  type        = string
+variable "azure_subscription_ids" {
+  description = "The Azure subscription ID map to use for various environments, applications, etc."
+  type        = map(string)
   sensitive   = true
+
+  validation  {
+    condition = contains(keys(var.azure_subscription_ids), "development")
+    error_message = "The map must contain at least the 'development' key."
+  }
 }

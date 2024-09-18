@@ -4,10 +4,20 @@
 # You can read about contexts here:
 #
 # https://docs.spacelift.io/concepts/context
-resource "spacelift_context" "enterprise" {
-  name        = "${var.enterprise_name} context"
-  description = "Context for the ${var.enterprise_name} organization"
+resource "spacelift_context" "sdlc_environments" {
+  for_each = keys(var.azure_subscription_ids)
+
+  name        = "${each.key} Environment"
+  description = "Context for the ${each.key} Environment of our enterprise."
   space_id    = spacelift_space.enterprise.id
+
+  labels      = setunion(
+    local.labels,
+    [
+      "environment:${each.key}",
+      "autoattach:${each.key}",
+    ]
+  )
 }
 
 # This is an envioronment variable defined on the context level. When the
@@ -19,12 +29,14 @@ resource "spacelift_context" "enterprise" {
 # You can read more about environment variables here:
 #
 # https://docs.spacelift.io/concepts/environment#environment-variables
-# resource "spacelift_environment_variable" "context-plaintext" {
-#   context_id = spacelift_context.enterprise.id
-#   name       = "CONTEXT_PUBLIC"
-#   value      = "This should be visible!"
-#   write_only = false
-# }
+resource "spacelift_environment_variable" "azure_subscription_id" {
+  for_each   = spacelift_context.sdlc_environments
+
+  context_id = each.value.id
+  name       = "ARM_SUBSCRIPTION_ID"
+  value      = var.azure_subscription_ids[each.key]
+  write_only = true
+}
 
 # For another (secret) variable, let's create programmatically create a super
 # secret password.

@@ -1,22 +1,27 @@
-resource "spacelift_stack" "enterprise" {
+resource "spacelift_stack" "sdlc_environments" {
+  for_each = ["development"]  # keys(var.azure_subscription_ids)
+
   # This block is required if not using the Spacelift GitHub App installed from marketplace
   github_enterprise {
       namespace = "sassy-bulldog"
     }
 
   space_id    = spacelift_space.enterprise.id
-  name        = "${var.enterprise_name} stack"
-  description = var.enterprise_description
+  name        = "${each.key} stack"
+  description = "${each.key} environment stack for ${var.enterprise_name}."
 
   repository   = data.spacelift_stack.this.repository
   branch       = data.spacelift_stack.this.branch
   project_root = "enterprise"  # Subdirectory in this repository to use WTF
 
   autodeploy = true
-  labels     = [
-    "managed",
-    "depends-on:${data.spacelift_current_stack.this.id}"
-  ]
+  labels     = setunion(
+    local.labels,
+    [
+      each.key,
+      "depends-on:${data.spacelift_current_stack.this.id}"
+    ]
+  )
 }
 
 # This is an environment variable defined on the stack level. Stack-level

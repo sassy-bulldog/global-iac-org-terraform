@@ -1,3 +1,14 @@
+locals {
+  # Common labels or tags for all resources created by this module
+  labels = [
+    "Created-By:Spacelift",
+    "Managed-By:Terraform",
+    "Repository:global-iac-org-terraform",
+    var.enterprise_name,
+    "depends-on:${data.spacelift_current_stack.this.id}"
+  ]
+}
+
 data "spacelift_account" "this" {}
 
 data "spacelift_space" "root" {

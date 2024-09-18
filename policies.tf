@@ -34,13 +34,19 @@ resource "spacelift_policy" "push" {
 
   name = "Ignore commits outside the project root"
   body = file("${path.module}/policies/push.rego")
+  labels = setunion(
+    local.labels,
+    [
+      "autoattach:code",
+    ]
+  )
 }
 
 # Push policies only take effect when attached to the stack.
-resource "spacelift_policy_attachment" "push" {
-  policy_id = spacelift_policy.push.id
-  stack_id  = data.spacelift_current_stack.this.id
-}
+# resource "spacelift_policy_attachment" "push" {
+#   policy_id = spacelift_policy.push.id
+#   stack_id  = data.spacelift_current_stack.this.id
+# }
 
 # TRIGGER POLICY
 #

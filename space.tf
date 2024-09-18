@@ -5,7 +5,6 @@ resource "spacelift_space" "enterprise" {
   # Every account has a root space that serves as the root for the space tree.
   # Except for the root space, all the other spaces must define their parents.
   parent_space_id  = "root"
-  inherit_entities = true
-
-  labels = [var.enterprise_name]
+  inherit_entities = false
+  labels      = local.labels
 }

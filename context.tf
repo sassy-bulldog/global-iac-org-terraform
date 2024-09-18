@@ -5,7 +5,7 @@
 #
 # https://docs.spacelift.io/concepts/context
 resource "spacelift_context" "sdlc_environments" {
-  for_each = keys(var.azure_subscription_ids)
+  for_each = toset(keys(var.azure_subscription_ids))
 
   name        = "${each.key} Environment"
   description = "Context for the ${each.key} Environment of our enterprise."

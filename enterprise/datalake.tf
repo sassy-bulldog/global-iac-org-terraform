@@ -12,8 +12,10 @@ resource "azurerm_storage_account" "lake" {
 }
 
 resource "azurerm_storage_data_lake_gen2_filesystem" "data_lake" {
+  count = var.create.data_lake ? 1 : 0
+
   name               = "${var.resource_group}-data-lake"
-  storage_account_id = azurerm_storage_account.lake.id
+  storage_account_id = azurerm_storage_account.lake[count.index].id
   # default_encryption_scope 
 
 #   properties = {

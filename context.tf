@@ -5,7 +5,7 @@
 #
 # https://docs.spacelift.io/concepts/context
 resource "spacelift_context" "sdlc_environments" {
-  for_each = local.sdlc_environments
+  for_each = nonsensitive(local.sdlc_environments)
 
   name        = "${each.key} Environment"
   description = "Context for the ${each.key} Environment of our enterprise."

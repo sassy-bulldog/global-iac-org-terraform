@@ -1,6 +1,6 @@
 # We should move this to another repo and have it target specific branches
 resource "spacelift_stack" "sdlc_environments" {
-  for_each = toset(["development"])  # keys(locals.sdlc_environments)
+  for_each = toset(["development"])  # keys(local.sdlc_environments)
 
   # This block is required if not using the Spacelift GitHub App installed from marketplace
   github_enterprise {

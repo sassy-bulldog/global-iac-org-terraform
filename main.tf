@@ -1,5 +1,5 @@
 locals {
-  sdlc_environments = toset([for env in keys(var.azure_sdlc_map): nonsensitive(env)])
+  sdlc_environments = toset([for env in keys(var.azure_sdlc_map): env]) # nonsensitive?
 
   # Common labels or tags for all resources created by this module
   labels = [

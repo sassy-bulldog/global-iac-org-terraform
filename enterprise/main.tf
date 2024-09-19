@@ -1,11 +1,16 @@
+data "spacelift_current_stack" "this" {}
+
 locals {
   default_tags = {
-    # environment = var.environment
-    company = var.company_name
+    "Created-By" = "Spacelift",
+    "Stack"      = data.spacelift_current_stack.this.id
+    "Managed-By" = "Terraform",
+    "Repository" = "global-iac-org-terraform",
+    "Company"    = var.company_name,
   }
 }
 
-resource "azurerm_resource_group" "company" {
-  name     = var.company_name
+resource "azurerm_resource_group" "this" {
+  name     = var.resource_group
   location = var.azure_region
 }

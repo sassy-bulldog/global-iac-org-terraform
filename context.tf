@@ -5,7 +5,7 @@
 #
 # https://docs.spacelift.io/concepts/context
 resource "spacelift_context" "sdlc_environments" {
-  for_each = toset(keys(var.azure_subscription_ids))
+  for_each = locals.sdlc_environments
 
   name        = "${each.key} Environment"
   description = "Context for the ${each.key} Environment of our enterprise."
@@ -14,6 +14,7 @@ resource "spacelift_context" "sdlc_environments" {
   labels      = setunion(
     local.labels,
     [
+      "azure",
       "environment:${each.key}",
       "autoattach:${each.key}",
     ]
@@ -29,13 +30,40 @@ resource "spacelift_context" "sdlc_environments" {
 # You can read more about environment variables here:
 #
 # https://docs.spacelift.io/concepts/environment#environment-variables
-resource "spacelift_environment_variable" "azure_subscription_id" {
+# resource "spacelift_environment_variable" "azure_subscription_id" {
+#   for_each   = spacelift_context.sdlc_environments
+
+#   context_id = each.value.id
+#   name       = "ARM_SUBSCRIPTION_ID"
+#   value      = var.azure_subscription_ids[each.key]
+#   write_only = true
+# }
+
+resource "spacelift_environment_variable" "enterprise" {
   for_each   = spacelift_context.sdlc_environments
 
   context_id = each.value.id
-  name       = "ARM_SUBSCRIPTION_ID"
-  value      = var.azure_subscription_ids[each.key]
-  write_only = true
+  name       = "TF_VAR_company_name"
+  value      = each.key
+  write_only = false
+}
+
+resource "spacelift_environment_variable" "resource_group" {
+  for_each   = spacelift_context.sdlc_environments
+
+  context_id = each.value.id
+  name       = "TF_VAR_resource_group"
+  value      = each.key
+  write_only = false
+}
+
+resource "spacelift_environment_variable" "cidr_block" {
+  for_each   = spacelift_context.sdlc_environments
+
+  context_id = each.value.id
+  name       = "TF_VAR_azure_vnet_cidr_block"
+  value      = var.azure_cidr_blocks[each.key]
+  write_only = false
 }
 
 # For another (secret) variable, let's create programmatically create a super

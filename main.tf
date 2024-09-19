@@ -1,4 +1,6 @@
 locals {
+  sdlc_environments = toset([for env in keys(var.azure_sdlc_map): nonsensitive(env)])
+
   # Common labels or tags for all resources created by this module
   labels = [
     "Created-By:Spacelift",

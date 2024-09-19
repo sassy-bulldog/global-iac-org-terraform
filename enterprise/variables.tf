@@ -16,7 +16,12 @@ variable "create" {
 }
 
 variable "company_name" {
-  description = "The name of your company"
+  description = "Name of the company in the enterprise hierarchy that owns the resources."
+  
+}
+
+variable "resource_group" {
+  description = "The subcategory or purpose for billing allocations."
   type        = string
   default     = "Enterprise"
 }

@@ -44,7 +44,7 @@ resource "spacelift_environment_variable" "enterprise" {
 
   context_id = each.value.id
   name       = "TF_VAR_company_name"
-  value      = each.key
+  value      = var.enterprise_name
   write_only = false
 }
 
@@ -62,7 +62,7 @@ resource "spacelift_environment_variable" "cidr_block" {
 
   context_id = each.value.id
   name       = "TF_VAR_azure_vnet_cidr_block"
-  value      = var.azure_cidr_blocks[each.key]
+  value      = var.azure_sdlc_map[each.key].cidr_block
   write_only = false
 }
 

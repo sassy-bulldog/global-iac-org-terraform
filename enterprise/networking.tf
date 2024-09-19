@@ -1,7 +1,7 @@
 resource "azurerm_virtual_network" "company" {
   name                = "${var.resource_group}-vnet"
-  resource_group_name = azurerm_resource_group.company.name
-  location            = azurerm_resource_group.company.location
+  resource_group_name = azurerm_resource_group.this.name
+  location            = azurerm_resource_group.this.location
   address_space       = [var.azure_vnet_cidr_block]
 
   tags = local.default_tags

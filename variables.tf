@@ -33,21 +33,3 @@ variable "azure_sdlc_map" {
     error_message = "The map must contain at least the 'development' key."
   }
 }
-
-variable "azure_cidr_blocks" {
-  description = <<EOT
-    The CIDR Blocks to use for the SDLC environments in Azure.
-  EOT
-  type        = map(string)
-  default = {
-    "development" = "10.0.0.0/24",
-    "production"  = "10.1.0.0/24",
-    "shared"      = "10.2.0.0/24",
-  }
-
-
-  validation  {
-    condition = contains(keys(var.azure_subscription_ids), "development")
-    error_message = "The map must contain at least the 'development' key."
-  }
-}

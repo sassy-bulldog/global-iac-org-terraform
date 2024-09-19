@@ -7,10 +7,12 @@ variable "create" {
   EOT
   type = object({
     vpn     = bool
+    data_lake = bool
     backups = bool
   })
   default = {
     vpn     = false
+    data_lake = true
     backups = false
   }
 }

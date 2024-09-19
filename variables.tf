@@ -29,7 +29,7 @@ variable "azure_sdlc_map" {
   sensitive   = true
 
   validation  {
-    condition = contains(keys(var.azure_subscription_ids), "development")
+    condition = contains(keys(var.azure_sdlc_map), "development")
     error_message = "The map must contain at least the 'development' key."
   }
 }

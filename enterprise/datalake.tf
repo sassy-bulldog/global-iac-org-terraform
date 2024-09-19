@@ -1,7 +1,7 @@
 resource "azurerm_storage_account" "lake" {
   count = var.create.data_lake ? 1 : 0
 
-  name                     = "${var.resource_group}-data-lake-storage"
+  name                     = "${var.resource_group}dls"  # Data Lake Storage
   resource_group_name      = azurerm_resource_group.this.name
   location                 = azurerm_resource_group.this.location
   account_tier             = "Standard"

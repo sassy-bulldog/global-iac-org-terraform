@@ -38,5 +38,5 @@ variable "azure_region" {
 variable "azure_vnet_cidr_block" {
   description = "The CIDR block for the Azure VNet"
   type        = string
-  default     = "10.0.0.0/24"
+  default     = "10.0.0.0/8"
 }

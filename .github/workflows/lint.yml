@@ -1,7 +1,15 @@
----
 # Name as it appears on the Actions tab of GitHub
 # (for current repo; this get's ignored if called from another repo)
+---
 name: Lint Code
+
+
+# Down scope as necessary via 
+# yamllint disable-line rule:line-length
+# https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
+permissions:
+  contents: write
+  checks: write
 
 # Controls when the workflow will run
 on:
@@ -16,13 +24,6 @@ on:
       - alpha/*
       - alpha
   pull_request_target:
-
-# Down scope as necessary via
-# yamllint disable-line rule:line-length
-# https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
-permissions:
-  checks: write
-  contents: write
 
 jobs:
   run-terraform-linters:

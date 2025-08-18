@@ -4,7 +4,7 @@
 name: Lint Code
 
 
-# Down scope as necessary via 
+# Down scope as necessary via
 # yamllint disable-line rule:line-length
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
 permissions:

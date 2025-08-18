@@ -493,7 +493,7 @@ FodyWeavers.xsd
 
 # Visual Studio Code
 ## Add Visual Studio Code specific settings
-.vscode/*
+.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -514,7 +514,7 @@ FodyWeavers.xsd
 [Ll]ib
 [Ll]ib64
 [Ll]ocal
-[Ss]cripts
+#[Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
 

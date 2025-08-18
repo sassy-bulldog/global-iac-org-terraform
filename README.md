@@ -1,6 +1,6 @@
 # So you want to take Spacelift for a spin?
 
-This repository is designed just for this purpose. Click the _Use this template_ button to create your own repository in a GitHub account you manage (either your private account or an organization you have admin rights on), and let's get started. 
+This repository is designed just for this purpose. Click the _Use this template_ button to create your own repository in a GitHub account you manage (either your private account or an organization you have admin rights on), and let's get started.
 
 If you change the repository name, make sure to update the `spacelift_stack.managed` resource in the  `stack.tf` file.
 
@@ -24,7 +24,7 @@ In this tutorial, you will not be using any cloud providers. You won't need any 
 
 > The flow for connecting GitHub as a VCS provider is slightly different when using GitHub to sign in compared to the other sign-in options (GitLab, Google). Follow the section that is applicable to you.
 
-### GitHub was used as a sign-in option:
+### GitHub was used as a sign-in option
 
 1. [Install the Spacelift GitHub App](https://github.com/apps/spacelift-io/installations/new) if you not already installed it.
 2. At this point, it's up to you to decide whether to give Spacelift access to all your repositories or a defined subset.
@@ -35,7 +35,7 @@ In this tutorial, you will not be using any cloud providers. You won't need any 
 
 3. Installing the application takes you to your first Spacelift screen, where you can create your first stack.
 
-### Google or GitLab was used as a sign-in option:
+### Google or GitLab was used as a sign-in option
 
 1. After signing up, you should have arrived on the Spacelift console.
 2. Follow the guide for [setting up the GitHub integration](https://docs.spacelift.io/integrations/source-control/github#setting-up-the-integration).
@@ -88,7 +88,6 @@ Congratulations, you just created your first stack!
 ## Step 4: Triggering a run
 
 Your new stack does not show any tracked runs (AKA deployments) yet. Let's trigger the first one.
-
 
 ![Trigger run](pics/07-trigger-run-min.png)
 
@@ -174,11 +173,11 @@ And here's the exact change we're making:
 
 ![Pull Request changes](pics/18-pull-request-changes-min.png)
 
-That little change causes two runs to be executed since this repository is now connected to two stacks - one that you created manually and one that is managed programmatically. It's the latter stack we've made changes to, so you will see that there are no changes to the former, but one resource would be created for the latter. 
+That little change causes two runs to be executed since this repository is now connected to two stacks - one that you created manually and one that is managed programmatically. It's the latter stack we've made changes to, so you will see that there are no changes to the former, but one resource would be created for the latter.
 
 ![Pull Request feedback](pics/19-pull-request-feedback-min.png)
 
-Clicking on the _Details_ link next to the commit status check takes you to the test run for the affected stack. 
+Clicking on the _Details_ link next to the commit status check takes you to the test run for the affected stack.
 
 ![PR details](pics/20-pull-request-preview-min.png)
 
@@ -192,7 +191,7 @@ A run will be created automatically in the _Runs_ tab of your _Managed stack_ wh
 
 ![Run from a merged PR](pics/22-merged-pull-request-min.png)
 
-## Congratulations! 👏🏻 
+## Congratulations! 👏🏻
 
 You're a Spacelift expert now! If you like what you've seen so far, here are some suggestions:
 

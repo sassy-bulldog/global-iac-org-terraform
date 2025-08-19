@@ -57,19 +57,17 @@ if ($pnppsm) {
 $spAdminUrl = "https://$TenantName-admin.sharepoint.com"
 
 try {
-        # Dynamically build parameter hashtable for non-empty values
-        $connectParams = @{
-            Url = $spAdminUrl
-        }
-        if ($ClientId) { $connectParams.ClientId = $ClientId }
-        # if ($TenantName) { $connectParams.Tenant = "$TenantName.onmicrosoft.com" }
-        # if ($CertificatePath) { $connectParams.CertificatePath = $CertificatePath }
-        # if ($CertificatePassword) { $connectParams.CertificatePassword = $CertificatePassword }
-        Write-Host "Connect-PnPOnline parameters:"
-        $connectParams.GetEnumerator() | ForEach-Object { Write-Host "$($_.Key): $($_.Value)" }
-        Connect-PnPOnline @connectParams -Interactive
-        -Interactive
-    ;
+    # Dynamically build parameter hashtable for non-empty values
+    $connectParams = @{
+        Url = $spAdminUrl
+    }
+    # if ($ClientId) { $connectParams.ClientId = $ClientId }
+    # if ($TenantName) { $connectParams.Tenant = "$TenantName.onmicrosoft.com" }
+    # if ($CertificatePath) { $connectParams.CertificatePath = $CertificatePath }
+    # if ($CertificatePassword) { $connectParams.CertificatePassword = $CertificatePassword }
+    Write-Host "Connect-PnPOnline parameters:"
+    $connectParams.GetEnumerator() | ForEach-Object { Write-Host "$($_.Key): $($_.Value)" }
+    Connect-PnPOnline @connectParams -Interactive;
 } catch {
     Write-Warning "Interactive login failed, trying device login..."
     try {
@@ -77,19 +75,19 @@ try {
         $connectParams = @{
             Url = $spAdminUrl
         }
-        if ($TenantName) { $connectParams.Tenant = "$TenantName.onmicrosoft.com" }
         Write-Host "Connect-PnPOnline parameters:"
         $connectParams.GetEnumerator() | ForEach-Object { Write-Host "$($_.Key): $($_.Value)" }
-        Connect-PnPOnline @connectParams -DeviceLogin
+        Connect-PnPOnline @connectParams -DeviceLogin -Verbose;
     } catch {
         Write-Warning "Device login failed, trying web login..."
         # Dynamically build parameter hashtable for non-empty values
         $connectParams = @{
             Url = $spAdminUrl
         }
+        if ($ClientId) { $connectParams.ClientId = $ClientId }
         Write-Host "Connect-PnPOnline parameters:"
         $connectParams.GetEnumerator() | ForEach-Object { Write-Host "$($_.Key): $($_.Value)" }
-        Connect-PnPOnline @connectParams -OSLogin
+        Connect-PnPOnline @connectParams -OSLogin;
     }
 }
 

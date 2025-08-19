@@ -8,15 +8,15 @@ fail_fast: false
 minimum_pre_commit_version: "2.6.0"
 
 ci:
-  autofix_commit_msg: 'chore(pre-commit.ci): Auto fixes [...]'
-  autoupdate_commit_msg: 'chore(pre-commit.ci): Auto update of pre-commit hooks'
-  skip:
-    - terraform_fmt_docker
-    - terraform_validate_docker
-    - terraform_tflint_docker
-    - terraform_docs_docker
-    - terraform_checkov_docker
-    - terraform_trivy_docker
+    autofix_commit_msg: 'chore(pre-commit.ci): Auto fixes [...]'
+    autoupdate_commit_msg: 'chore(pre-commit.ci): Auto update of pre-commit hooks'
+    skip:
+      - terraform_fmt_docker
+      - terraform_validate_docker
+      - terraform_tflint_docker
+      - terraform_docs_docker
+      - terraform_checkov_docker
+      - terraform_trivy_docker
 
 repos:
   # Fork from https://github.com/antonbabenko/pre-commit-terraform
@@ -67,3 +67,4 @@ repos:
     rev: v0.45.0
     hooks:
       - id: markdownlint-fix
+        exclude: ^(CHANGELOG|LICENSE|BLANK_README|.github/).*$

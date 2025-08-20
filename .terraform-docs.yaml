@@ -6,7 +6,7 @@ settings:
   color: true
   default: true
   escape: true
-  html: true
+  html: false
   indent: 2
   required: true
   sensitive: true

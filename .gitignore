@@ -275,7 +275,7 @@ publish/
 
 ## Publish Web Output
 *.[Pp]ublish.xml
-*.azurePubxml
+*.azurePubxmls
 ## Note: Comment the next line if you want to checkin your web deploy settings,
 ## but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
@@ -514,7 +514,7 @@ FodyWeavers.xsd
 [Ll]ib
 [Ll]ib64
 [Ll]ocal
-[Ss]cripts
+#[Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
 

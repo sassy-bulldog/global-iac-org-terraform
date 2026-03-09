@@ -22,7 +22,7 @@ repos:
   # Fork from https://github.com/antonbabenko/pre-commit-terraform
   # His does not yet use docker images
   - repo: https://github.com/actuarysailor/pre-commit-terraform
-    rev: "1815705d890046e053875e8b75e30965f9fa62e9"
+    rev: "v1.101.1"
     hooks:
       - id: terraform_fmt_docker
       - id: terraform_validate_docker
@@ -59,12 +59,12 @@ repos:
 
   # Optionally, add yamllint for YAML files
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.1  # Use the latest stable version
+    rev: v1.38.0  # Use the latest stable version
     hooks:
       - id: yamllint
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.45.0
+    rev: v0.48.0
     hooks:
       - id: markdownlint-fix
         exclude: ^(BLANK_README).*$
